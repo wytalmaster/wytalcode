@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>Wytal</artifactId>
+    <groupId>com.wytal</groupId>
+    <version>develop-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>Wytal-Web</artifactId>
+  <version>${application.version}</version>
+  <packaging>war</packaging>
+  <name>Wytal-Web</name>
+  <description>Wytal Web Engine</description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  
+  
+  <dependencies>
+    <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+    </dependency>
+   <dependency>
+      		<groupId>com.wytal</groupId>
+      		<artifactId>Wytal-Authentication</artifactId>
+      		<version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.wytal</groupId>
+      <artifactId>Wytal-Commons</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      		<groupId>com.wytal</groupId>
+      		<artifactId>Wytal-Logging</artifactId>
+      		<version>${project.version}</version>
+    </dependency>
+    <dependency>
+      		<groupId>com.wytal</groupId>
+      		<artifactId>Wytal-Util</artifactId>
+      		<version>${project.version}</version>
+    </dependency>
+   </dependencies> 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <warSourceDirectory>${basedir}/WebRoot</warSourceDirectory>
+          <version>3.0</version>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

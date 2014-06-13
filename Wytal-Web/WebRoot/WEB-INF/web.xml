@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+
+	<servlet-mapping>   
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>/ui/*.html</url-pattern>
+	    <url-pattern>*.jpg</url-pattern>
+	    <url-pattern>*.png</url-pattern>
+	    <url-pattern>*.css</url-pattern>
+	    <url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+
+   <servlet>
+    <description>About servlet</description>
+    <display-name>About</display-name>
+    <servlet-name>About</servlet-name>
+    <servlet-class>com.wytal.servlet.About</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>About</servlet-name>
+    <url-pattern>/about</url-pattern>
+  </servlet-mapping> 
+  
+
+    
+   <servlet>
+	<servlet-name>CXFServlet</servlet-name>	
+	<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>CXFServlet</servlet-name>
+	<url-pattern>/services/*</url-pattern>
+  </servlet-mapping> 
+  
+  
+
+  <!-- Map URLs to that servlet. -->
+    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+  		<listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
+	</listener> 
+    <context-param>
+        <description>Tells our ContextLoaderListener where to find our application context.</description>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/beanRefFactory.xml</param-value>
+    </context-param>
+    <env-entry>
+        <description>URL for configuring logback context for CAS</description>
+        <env-entry-name>logback/configuration-resource</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>logback-app-Wytal.xml</env-entry-value>
+   </env-entry>
+   
+   
+    
+    
+    
+  <welcome-file-list>
+    <welcome-file>about</welcome-file>
+</welcome-file-list> 
+</web-app>

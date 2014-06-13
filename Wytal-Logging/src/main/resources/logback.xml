@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<configuration>
+	<!-- logging for each project -->
+	<property name="AUTH_LOGS_DIR" 	value="${LOG_DIR}" />
+	<property name="UTIL_LOGS_DIR" 	value="${LOG_DIR}" />
+	<property name="COMMONS_LOGS_DIR" 	value="${LOG_DIR}" />
+	
+    
+    <property name="MAX_FILE_SIZE" 		value="5MB" />
+    
+	<appender name="AUTH-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ACCOUNT_LOGS_DIR}/authentication.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${AUTH_LOGS_DIR}/auth.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+    <appender name="UTIL-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${UTIL_LOGS_DIR}/util.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${UTIL_LOGS_DIR}/admin.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+    <appender name="COMMONS-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${COMMONS_LOGS_DIR}/commons.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${COMMONS_LOGS_DIR}/aggregate.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+
+    
+    <appender name="ERR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+          <level>ERROR</level>
+          <onMatch>ACCEPT</onMatch>
+          <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <file>${ERR_LOGS_DIR}/err.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${ERR_LOGS_DIR}/err.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+      	  </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="METER-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${METER_LOGS_DIR}/meter.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${METER_LOGS_DIR}/meter.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{35} |%X{parentReqId:-self} |%X{reqId:-na}|%X{clientIp:-na}|%X{retailer:-na}|%X{model:-na}|%X{sn:-na}|%X{api:-na}|%class|%method|%X{startTime:-na}|%X{endTime:-na}|%X{timeTaken:-na}|%X{reqSize:-na}|%X{resSize:-na} - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="PERF-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PERF_LOGS_DIR}/perf.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${PERF_LOGS_DIR}/perf.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{35} |%X{parentReqId:-self}|%X{reqId:-na}|%X{clientIp:-na}|%X{retailer:-na}|%X{model:-na}|%X{sn:-na}|%X{api:-na}|%class|%method|%X{startTime:-na}|%X{endTime:-na}|%X{timeTaken:-na}|%X{reqSize:-na}|%X{resSize:-na} - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+
+	<appender name="AUTH-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="AUTH-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="UTIL-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="UTIL-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="COMMONS-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="COMMONS-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    
+    <appender name="ERR-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="ERR-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="METER-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="METER-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    <appender name="PERF-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="PERF-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+    
+    <logger name="auth" level="DEBUG" additivity="false">
+        <appender-ref ref="AUTH-ASYNC"/>
+        <appender-ref ref="ERR-ASYNC"/>
+    </logger>
+    <logger name="util" level="DEBUG" additivity="false">
+        <appender-ref ref="UTIL-ASYNC"/>
+        <appender-ref ref="ERR-ASYNC"/>
+    </logger>
+    <logger name="commons" level="DEBUG" additivity="false">
+        <appender-ref ref="COMMONS-ASYNC"/>
+        <appender-ref ref="ERR-ASYNC"/>
+    </logger>
+    
+    
+    <!--
+    <root level="error">
+        <appender-ref ref="ERR-ASYNC"/>
+    </root>
+    -->
+</configuration>

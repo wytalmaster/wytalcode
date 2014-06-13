@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+      xmlns:cxf="http://cxf.apache.org/core"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      					  http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+         				  http://cxf.apache.org/jaxrs 
+         				  http://cxf.apache.org/schemas/jaxrs.xsd
+         				  http://cxf.apache.org/core 
+         				  http://cxf.apache.org/schemas/core.xsd">
+         			
+    <import resource="classpath*:spring/spring-commons.xml"/>
+    <import resource="classpath*:spring/spring-UtilApplicationContext.xml"/>  
+	
+    <bean id="wytalExceptionInterceptor" class="com.wytal.util.exception.WytalExceptionInterceptor" scope="singleton">
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
+   </bean>
+   
+   <bean id="authAdminDaoService" class="com.wytal.auth.service.dao.impl.AuthorizationAdminDaoServiceImpl"  scope="singleton" init-method="init" parent="serviceResource">
+   		<property name="resourceName" value="jdbc-authAdmin.sql"/>
+   </bean>
+   
+   <bean id="authAdminService" class="com.wytal.auth.service.impl.AuthorizationAdminServiceImpl"  scope="singleton"  >
+   		<property name="authorizationDaoService" ref="authAdminDaoService"/>
+   		<property name="seedDataService" ref="seedDataService"/>
+   </bean>
+   
+	<jaxrs:server address="/v1/authAdmin" id="authAdminServiceExt">
+		<jaxrs:serviceBeans>
+			<ref bean="authAdminService"/>
+				</jaxrs:serviceBeans>
+				<jaxrs:extensionMappings>
+					<entry key="xml" value="application/xml"/>
+					<entry key="json" value="application/json" />
+				</jaxrs:extensionMappings>
+                <jaxrs:providers>
+					<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+				</jaxrs:providers>
+    </jaxrs:server>
+
+</beans>
+
