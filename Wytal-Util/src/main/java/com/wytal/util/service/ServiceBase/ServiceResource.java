@@ -52,8 +52,12 @@ public abstract class ServiceResource {
     public void init() throws Exception{
 		try {
 			prop = this.getResourceLoader().loadProperty(this.getClass(), this.getResourceFolder(), this.getResourceName());
+			if(prop==null){
+				System.out.println("Cannot find the resource "+ this.getResourceName());
+			}
 		}
 		catch(Exception ex){
+			ex.printStackTrace();
 			this.getLogger().error(ex.getMessage(),ex);
 			throw ex;
 		}

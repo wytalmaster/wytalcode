@@ -10,7 +10,7 @@
   <artifactId>Wytal-Web</artifactId>
   <version>${application.version}</version>
   <packaging>war</packaging>
-  <name>Wytal-Web</name>
+  <name>Wytal Web</name>
   <description>Wytal Web Engine</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,6 +41,16 @@
     <dependency>
       		<groupId>com.wytal</groupId>
       		<artifactId>Wytal-Util</artifactId>
+      		<version>${project.version}</version>
+    </dependency>
+    <dependency>
+      		<groupId>com.wytal</groupId>
+      		<artifactId>Wytal-Person</artifactId>
+      		<version>${project.version}</version>
+    </dependency>
+    <dependency>
+      		<groupId>com.wytal</groupId>
+      		<artifactId>Wytal-Organization</artifactId>
       		<version>${project.version}</version>
     </dependency>
    </dependencies> 

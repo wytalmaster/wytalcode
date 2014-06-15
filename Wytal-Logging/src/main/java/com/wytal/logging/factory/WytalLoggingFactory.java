@@ -15,6 +15,9 @@ public class WytalLoggingFactory {
 	public static final String COMMON_LOGGER  	= "commons";
 	public static final String AUTH_LOGGER  	= "authentication";
 	
+	public static final String ORG_LOGGER  		= "organization";
+	public static final String PERSON_LOGGER  	= "person";
+	
 
 	static Map<String, Logger> mapLogMap = new HashMap<>();
 	static public Logger getLogger(String prj) {

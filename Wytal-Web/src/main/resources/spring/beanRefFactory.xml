@@ -17,6 +17,8 @@
     
 
     <import resource="classpath*:spring/spring-authenticationAdmin.xml"/>
+    <import resource="classpath*:spring/spring-address.xml"/>
+    <import resource="classpath*:spring/spring-Organization.xml"/>
 
     
 

@@ -241,7 +241,8 @@
                 <module>Wytal-Web</module>
                 <module>Wytal-Logging</module>
                 <module>Wytal-Util</module>
-	
+                <module>Wytal-Person</module>
+		<module>Wytal-Organization</module>
             </modules>
         </profile>
     </profiles>
@@ -252,5 +253,6 @@
      <module>Wytal-Logging</module>
      <module>Wytal-Util</module>
      <module>Wytal-Web</module>
+     <module>Wytal-Organization</module>
   </modules>
 </project>

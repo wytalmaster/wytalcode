@@ -30,7 +30,7 @@ public class WytalExceptonFactory extends ServiceResource {
                     rs = ps.executeQuery();
                     while(rs.next()){
                             String type = rs.getString(1);
-                            int code = rs.getInt(2);
+                            String code = String.format("%04d", rs.getInt(2));
                             //String level = rs.getInt(3);
                             String desc = rs.getString(3);
                             exceptionMap.put(type+code, desc);
@@ -87,8 +87,7 @@ public class WytalExceptonFactory extends ServiceResource {
 
 	@Override
 	protected Logger getLogger() {
-		// TODO Auto-generated method stub
-		return null;
+		return logger;
 	}
 
 

@@ -53,7 +53,7 @@ public class WytalExceptionInterceptor  extends  JAXRSOutInterceptor  {
 	            }
 	    }
 	    catch(Exception c){
-	            logger.error("WT9999:FIX THIS ASAP, Unhandled Exception" + "Thrown without a valid CAS exception",c);
+	            logger.error("WT9999:FIX THIS ASAP, Unhandled Exception" + "Thrown without a valid Wytal exception",c);
 	            we = this.factory.get("WT9999");
 	    }
 	

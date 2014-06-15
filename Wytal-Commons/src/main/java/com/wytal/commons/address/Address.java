@@ -17,6 +17,7 @@ public class Address implements Serializable{
 	private String addressLine2;
 	private String city;
 	private String state;
+	private String country;
 	private String postalCode;
 	private Date created;
 	private Date lastUpdated;
@@ -67,6 +68,13 @@ public class Address implements Serializable{
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	private Date createdDate;
 }

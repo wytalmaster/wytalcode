@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <configuration>
 	<!-- logging for each project -->
-	<property name="AUTH_LOGS_DIR" 	value="${LOG_DIR}" />
-	<property name="UTIL_LOGS_DIR" 	value="${LOG_DIR}" />
+	<property name="AUTH_LOGS_DIR" 		value="${LOG_DIR}" />
+	<property name="UTIL_LOGS_DIR" 		value="${LOG_DIR}" />
 	<property name="COMMONS_LOGS_DIR" 	value="${LOG_DIR}" />
+	<property name="ORG_LOGS_DIR" 		value="${LOG_DIR}" />
+	<property name="PERSON_LOGS_DIR" 	value="${LOG_DIR}" />
 	
     
     <property name="MAX_FILE_SIZE" 		value="5MB" />
     
 	<appender name="AUTH-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${ACCOUNT_LOGS_DIR}/authentication.log</file>
+        <file>${AUTH_LOGS_DIR}/authentication.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
           <!-- daily rollover -->
           <fileNamePattern>${AUTH_LOGS_DIR}/auth.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
@@ -26,7 +28,7 @@
         <file>${UTIL_LOGS_DIR}/util.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
           <!-- daily rollover -->
-          <fileNamePattern>${UTIL_LOGS_DIR}/admin.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <fileNamePattern>${UTIL_LOGS_DIR}/util.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
           <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
             <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
           </TimeBasedFileNamingAndTriggeringPolicy>
@@ -40,7 +42,38 @@
         <file>${COMMONS_LOGS_DIR}/commons.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
           <!-- daily rollover -->
-          <fileNamePattern>${COMMONS_LOGS_DIR}/aggregate.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <fileNamePattern>${COMMONS_LOGS_DIR}/common.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+    
+     <appender name="ORGS-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ORG_LOGS_DIR}/organization.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${ORG_LOGS_DIR}/org.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+          <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
+          </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} %method %L - %msg %n %ex</pattern>
+        </encoder>
+    </appender>
+
+
+	<appender name="PERSON-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PERSON_LOGS_DIR}/person.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <!-- daily rollover -->
+          <fileNamePattern>${ORGS_LOGS_DIR}/person.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
           <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
             <MaxFileSize>${MAX_FILE_SIZE}</MaxFileSize>
           </TimeBasedFileNamingAndTriggeringPolicy>
@@ -113,6 +146,14 @@
     </appender>
     <appender name="COMMONS-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
       <appender-ref ref="COMMONS-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+     <appender name="PERSON-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="PERSON-FILE" />
+      <includeCallerData>true</includeCallerData>
+    </appender>
+     <appender name="ORG-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="ORG-FILE" />
       <includeCallerData>true</includeCallerData>
     </appender>
     

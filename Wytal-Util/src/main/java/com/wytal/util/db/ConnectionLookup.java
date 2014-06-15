@@ -132,7 +132,7 @@ public class ConnectionLookup {
                 try {
                         con.close();
                 } catch (SQLException e) {
-                        //logger.error("closeConnection "+e.toString());
+                       logger.error("closeConnection "+e.toString());
                 }
         }
     }
@@ -142,37 +142,37 @@ public class ConnectionLookup {
                 try {
                         stmt.close();
                 } catch (SQLException e) {
-                        //logger.error("closeStatement "+e.toString());
+                        logger.error("closeStatement "+e.toString());
                 }
         }
     }
 
-    public static void closeResultSet(ResultSet rs) {
+    public void closeResultSet(ResultSet rs) {
         if(rs != null) {
                 try {
                         rs.close();
                 } catch (SQLException e) {
-                        //logger.error("closeResultSet "+e.toString());
+                        logger.error("closeResultSet "+e.toString());
                 }
         }
     }
 
-    public static void commit(Connection con) {
+    public  void commit(Connection con) {
         if(con != null) {
                 try {
                         if (!con.isClosed() && !con.getAutoCommit())
                                 con.commit();
                 } catch (SQLException e) {
-                        //logger.error("commit "+e.toString());
+                        logger.error("commit "+e.toString());
                 }
         }
     }
-    public static void rollback(Connection con) {
+    public  void rollback(Connection con) {
         if(con != null) {
                 try {
                         con.rollback();
                 } catch (SQLException e) {
-                        //logger.error("rollback "+e.toString());
+                        logger.error("rollback "+e.toString());
                 }
         }
     }

@@ -8,6 +8,7 @@
          				  http://cxf.apache.org/schemas/jaxrs.xsd
          				  http://cxf.apache.org/core 
          				  http://cxf.apache.org/schemas/core.xsd">
+      
      
 	<bean id="connection" class="com.wytal.util.db.ConnectionLookup" scope="singleton" init-method="init"/> 
 	<bean id="resourceLoader" class="com.wytal.util.resource.ResourceLoader" scope="singleton"/>
@@ -18,6 +19,7 @@
    		<property name="exceptionFactory" ref="exceptionFactory"/>
    </bean>
    
+   <bean id="exceptionMapper" class="com.wytal.util.exception.WytalExceptionMapper" scope="singleton"/>
    
    <bean id="serviceResource" class ="com.wytal.util.service.ServiceBase.ServiceResource" abstract="true">
    		<property name="connection" ref ="connection"/>
@@ -35,7 +37,7 @@
    			<ref bean="wytalExceptionInterceptor" />
 		</cxf:outFaultInterceptors> 
    </cxf:bus>
-
+  
 
 </beans>
 
