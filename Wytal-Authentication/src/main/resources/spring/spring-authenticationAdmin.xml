@@ -34,7 +34,9 @@
 					<entry key="json" value="application/json" />
 				</jaxrs:extensionMappings>
                 <jaxrs:providers>
-					<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+					<ref bean="jsonProvider"/>
+                    <ref bean="exceptionMapper"/>
+                    <ref bean="cors-filter"/>
 				</jaxrs:providers>
     </jaxrs:server>
 

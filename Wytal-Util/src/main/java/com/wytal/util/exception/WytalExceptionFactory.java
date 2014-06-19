@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import com.wytal.logging.factory.WytalLoggingFactory;
 import com.wytal.util.service.ServiceBase.ServiceResource;
 
-public class WytalExceptonFactory extends ServiceResource {
+public class WytalExceptionFactory extends ServiceResource {
     protected static final Logger logger = WytalLoggingFactory.getLogger(WytalLoggingFactory.UTIL_LOGGER);
     
     //Load all Exceptions
@@ -24,7 +24,7 @@ public class WytalExceptonFactory extends ServiceResource {
 
             try {
                     exceptionMap = new HashMap<>();
-                    String sql = prop.getProperty("101");
+                    String sql = this.getProperty("101");
                     conn= this.getConnection().getWytalDataSource();
                     ps = conn.prepareStatement(sql);
                     rs = ps.executeQuery();
@@ -35,7 +35,6 @@ public class WytalExceptonFactory extends ServiceResource {
                             String desc = rs.getString(3);
                             exceptionMap.put(type+code, desc);
                     }
-                    prop = null;
             }
             catch(Exception ex){
             		ex.printStackTrace();

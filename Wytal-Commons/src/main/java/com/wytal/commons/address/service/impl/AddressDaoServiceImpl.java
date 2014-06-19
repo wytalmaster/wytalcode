@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 
@@ -65,7 +67,7 @@ public class AddressDaoServiceImpl extends ServiceResource implements AddressDao
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(this.prop.getProperty("101"),Statement.RETURN_GENERATED_KEYS);
+			ps = conn.prepareStatement(this.getProperty("101"),Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, address.getAddressLine1());
 			ps.setString(2, address.getAddressLine2());
 			ps.setString(3,	address.getCity());
@@ -93,7 +95,7 @@ public class AddressDaoServiceImpl extends ServiceResource implements AddressDao
 	private void updateAddress(Address address,Connection conn) throws Exception{
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(this.prop.getProperty("102"));
+			ps = conn.prepareStatement(this.getProperty("102"));
 			ps.setString(1, address.getAddressLine1());
 			ps.setString(2, address.getAddressLine2());
 			ps.setString(3,	address.getCity());
@@ -136,7 +138,7 @@ public class AddressDaoServiceImpl extends ServiceResource implements AddressDao
 				sb.append(id).append(",");
 			}
 			sb.deleteCharAt(sb.length()-1);
-			String s = this.prop.getProperty("103");
+			String s = this.getProperty("103");
 			s = String.format(s, sb.toString());
 			st = conn.createStatement();
 			rs = st.executeQuery(s);
@@ -170,7 +172,7 @@ public class AddressDaoServiceImpl extends ServiceResource implements AddressDao
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String s = this.prop.getProperty("104");
+			String s = this.getProperty("104");
 			ps = conn.prepareStatement(s);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -178,6 +180,32 @@ public class AddressDaoServiceImpl extends ServiceResource implements AddressDao
 				return this.getAddress(rs);
 			}
 			return null;
+		}
+		finally{
+			this.getConnection().releaseResources(rs, ps, null);
+		}
+	}
+	
+	
+	@Override
+	public Map<Long, Address> getAllAddress(long personid,Connection conn) throws Exception{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			String s = this.getProperty("105");
+			ps = conn.prepareStatement(s);
+			ps.setLong(1, personid);
+			rs = ps.executeQuery();
+			Map<Long,Address> addressMap = new HashMap<>();
+			while(rs.next()){
+				Address a =  this.getAddress(rs);
+				addressMap.put(a.getAddressId(),a);
+			}
+			return addressMap;
+		}
+		catch(Exception ex){
+			logger.error("Error fetching address",ex);
+			throw ex;
 		}
 		finally{
 			this.getConnection().releaseResources(rs, ps, null);

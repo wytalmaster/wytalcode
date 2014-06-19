@@ -12,13 +12,13 @@
     <import resource="classpath*:spring/spring-commons.xml"/>
     <import resource="classpath*:spring/spring-UtilApplicationContext.xml"/>  
 	
-    <bean id="organizationContactDaoService" class="com.wytal.organization.service.impl.OrganizationContactDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
+    <bean id="organizationContactDaoService" class="com.wytal.commons.service.contact.impl.ContactDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
    		<property name="resourceName" value="jdbc-organizationContact.sql"/>
    		<property name="seedDataService" ref="seedDataService"/>
    	</bean>
    	
-   	<bean id="organizationContactService" class="com.wytal.organization.service.impl.OrganizationContactServiceImpl"  scope="singleton" init-method="init">
-   		<property name="organizationContactService" ref="organizationContactDaoService"/>
+   	<bean id="organizationContactService" class="com.wytal.commons.service.contact.impl.ContactServiceImpl"  scope="singleton" init-method="init">
+   		<property name="contactDaoService" ref="organizationContactDaoService"/>
 
    	</bean>
    	
@@ -46,6 +46,7 @@
                 <jaxrs:providers>
 					<ref bean="jsonProvider"/>
                     <ref bean="exceptionMapper"/>
+                    <ref bean="cors-filter"/>
 				</jaxrs:providers>
     </jaxrs:server>
    	

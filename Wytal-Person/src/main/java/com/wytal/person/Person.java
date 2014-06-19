@@ -1,15 +1,14 @@
-package com.wytal.commons.address;
+package com.wytal.person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.wytal.commons.contact.Contact;
-import com.wytal.commons.seed.service.Type;
 
 public class Person  implements Serializable{
 	private static final long serialVersionUID = 100000002L;
@@ -22,13 +21,47 @@ public class Person  implements Serializable{
 	private String 	otherName;
 	private Date  	dob;
 	private Gender 	gender;
+
+	private String  nationalID;
+	private String  secretKey;
+	
 	private Date	createdTime;
 	private Date 	lastUpdated;
+	private int 	organizationId;
 
-	private Map<AddressType,Address> addressMap;
-	private List<Contact> contacts;
+	private Collection<PersonAddress> contactAddress;
+	private Collection<Contact> contacts;
+	private Collection<PersonRelation> relationShip;
 	
 	
+	
+	
+	public Collection<PersonRelation> getRelationShip() {
+		return relationShip;
+	}
+	public void setRelationShip(Collection<PersonRelation> relationShip) {
+		this.relationShip = relationShip;
+	}
+	public String getNationalID() {
+		return nationalID;
+	}
+	public void setNationalID(String nationalID) {
+		this.nationalID = nationalID;
+	}
+	@JsonIgnore
+	public String getSecretKey() {
+		return secretKey;
+	}
+	@JsonIgnore
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
+	}
+	public int getOrganizationId() {
+		return organizationId;
+	}
+	public void setOrganizationId(int organizationId) {
+		this.organizationId = organizationId;
+	}
 	public long getId() {
 		return id;
 	}
@@ -87,32 +120,32 @@ public class Person  implements Serializable{
 	}
 	
 	
-	public Map<AddressType, Address> getAddressMap() {
-		return Collections.unmodifiableMap(addressMap);
-	}
-	public void addAddressMap(AddressType type , Address address) {
-		if (this.addressMap == null){
-			this.addressMap = new HashMap<>();
-		}
-		this.addressMap.put(type, address);
+	public Collection<PersonAddress> getContactAddress() {
+		if(contactAddress==null){ return null;}
+		return Collections.unmodifiableCollection(contactAddress);
 	}
 	
-	public void removeAddresMap(Type type ){
-		if (this.addressMap != null){
-			this.addressMap.remove(type);
-		}
+	public void setContactAddress(Collection<PersonAddress> address){
+		 this.contactAddress = address;
 	}
 	
-	public List<Contact> getContacts() {
-		 return Collections.unmodifiableList(contacts);
+	
+	public Collection<Contact> getContacts() {
+		if(contacts==null){ return null;}
+		 return Collections.unmodifiableCollection(contacts);
 	}
-	public void setContacts(Contact contact) {
+	
+	public void setContacts(Collection<Contact> contacts){
+		 this.contacts = contacts;
+	}
+	public void addContacts(Contact contact) {
 		if(this.contacts==null){
 			this.contacts = new ArrayList<>();
 		}
-		this.contacts.add(this.contacts.size(),contact);
+		this.contacts.add(contact);
 	}
 	
+	@JsonIgnore
 	public String getName(){
 		StringBuilder sb = new StringBuilder();
 		sb.append((firstName==null)?"":firstName).append(",");

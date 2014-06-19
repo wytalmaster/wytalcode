@@ -1,8 +1,8 @@
 package com.wytal.organization;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -18,8 +18,8 @@ public class Organization implements Serializable {
 	private String description;
 	private Address address;
 	private Integer parentOrganization;
-	private List<Integer> children;
-	private List<Contact> contacts;
+	private Collection<Integer> children;
+	private Collection<Contact> contacts;
 	
 	private Date createdDate;
 	private Date lastUpdated;
@@ -55,16 +55,16 @@ public class Organization implements Serializable {
 	public void setParentOrganization(Integer parentOrganization) {
 		this.parentOrganization = parentOrganization;
 	}
-	public List<Integer> getChildren() {
+	public Collection<Integer> getChildren() {
 		return children;
 	}
-	public void setChildren(List<Integer> children) {
+	public void setChildren(Collection<Integer> children) {
 		this.children = children;
 	}
-	public List<Contact> getContacts() {
+	public Collection<Contact> getContacts() {
 		return contacts;
 	}
-	public void setContacts(List<Contact> contacts) {
+	public void setContacts(Collection<Contact> contacts) {
 		this.contacts = contacts;
 	}
 	

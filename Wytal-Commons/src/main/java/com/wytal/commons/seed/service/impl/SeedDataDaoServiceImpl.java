@@ -64,7 +64,7 @@ public class SeedDataDaoServiceImpl extends ServiceResource  implements SeedData
 		try {
 			Collection<T> coll = new LinkedList<>();
 			conn = this.getConnection().getWytalDataSource();
-			ps = conn.prepareStatement(prop.getProperty(queryid));
+			ps = conn.prepareStatement(this.getProperty(queryid));
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
@@ -102,7 +102,7 @@ public class SeedDataDaoServiceImpl extends ServiceResource  implements SeedData
 		try {
 			Map<Integer,Role> roleMap = new TreeMap<>();
 			conn = this.getConnection().getWytalDataSource();
-			String query = prop.getProperty("101");
+			String query = this.getProperty("101");
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			while(rs.next()){
@@ -111,7 +111,7 @@ public class SeedDataDaoServiceImpl extends ServiceResource  implements SeedData
 			}
 			rs.close();
 			ps.close();
-			ps = conn.prepareStatement(prop.getProperty("102"));
+			ps = conn.prepareStatement(this.getProperty("102"));
 			rs = ps.executeQuery();
 			while(rs.next()){
 				int roleid = rs.getInt(1);

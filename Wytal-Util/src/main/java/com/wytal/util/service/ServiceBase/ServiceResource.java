@@ -5,9 +5,21 @@ import java.util.Properties;
 import org.slf4j.Logger;
 
 import com.wytal.util.db.ConnectionLookup;
+import com.wytal.util.exception.WytalExceptionFactory;
 import com.wytal.util.resource.ResourceLoader;
 
 public abstract class ServiceResource {
+	
+	
+	private WytalExceptionFactory exceptionFactory;
+	
+	public void setExceptionFactory(WytalExceptionFactory factory){
+		this.exceptionFactory = factory;
+	}
+	
+	public final WytalExceptionFactory getExceptionFactory(){
+		return this.exceptionFactory;
+	}
 	private ConnectionLookup connection;
     public void setConnection(ConnectionLookup lookup){
             this.connection = lookup;
@@ -45,8 +57,11 @@ public abstract class ServiceResource {
     	this.resourceFolder = folder;
     }
     
-    protected Properties prop;
+    private Properties prop;
     
+    public String getProperty(String key){
+    	return prop.getProperty(key);
+    }
     protected abstract Logger getLogger();
     
     public void init() throws Exception{

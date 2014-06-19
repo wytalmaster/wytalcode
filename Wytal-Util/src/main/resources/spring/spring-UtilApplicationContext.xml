@@ -24,9 +24,10 @@
    <bean id="serviceResource" class ="com.wytal.util.service.ServiceBase.ServiceResource" abstract="true">
    		<property name="connection" ref ="connection"/>
    		<property name="resourceLoader" ref="resourceLoader"/>
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
    </bean>
    
-   <bean id="exceptionFactory" class="com.wytal.util.exception.WytalExceptonFactory"  scope="singleton" init-method="init" parent="serviceResource">
+   <bean id="exceptionFactory" class="com.wytal.util.exception.WytalExceptionFactory"  scope="singleton" init-method="init" parent="serviceResource">
 		<property name="resourceName" value="jdbc-util.properties"/>
    </bean>
    <cxf:bus>
@@ -37,6 +38,8 @@
    			<ref bean="wytalExceptionInterceptor" />
 		</cxf:outFaultInterceptors> 
    </cxf:bus>
+  <bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+  <bean id="crypto" class="com.wytal.util.crypto.WytalCrypto" init-method="init"/>
   
 
 </beans>

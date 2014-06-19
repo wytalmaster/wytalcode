@@ -21,7 +21,7 @@ import com.wytal.organization.OrganizationSearchResponse;
 import com.wytal.organization.service.OrganizationDaoService;
 import com.wytal.organization.service.OrganizationService;
 import com.wytal.util.exception.WytalException;
-import com.wytal.util.exception.WytalExceptonFactory;
+import com.wytal.util.exception.WytalExceptionFactory;
 
 public class OrganizationServiceImpl implements OrganizationService{
 	
@@ -29,8 +29,8 @@ public class OrganizationServiceImpl implements OrganizationService{
 		
 	}
 	protected Logger logger = WytalLoggingFactory.getLogger(WytalLoggingFactory.ORG_LOGGER);
-	private WytalExceptonFactory exceptionFactory;
-	public void setExceptionFactory(WytalExceptonFactory factory){
+	private WytalExceptionFactory exceptionFactory;
+	public void setExceptionFactory(WytalExceptionFactory factory){
 		this.exceptionFactory = factory;
 	}
 	

@@ -9,16 +9,69 @@
          				  http://cxf.apache.org/core 
          				  http://cxf.apache.org/schemas/core.xsd">
      
-	<bean id="addressDaoService" class="com.wytal.service.dao.impl.address.AddressDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
-   		<property name="resourceName" value="jdbc-address.sql"/>
+	<bean id="personDaoService" class="com.wytal.person.service.impl.PersonDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
+   		<property name="resourceName" value="jdbc-person.sql"/>
+   		<property name="personContactDaoService"  ref="personContactDaoService"/>
+   		<property name="personRelationDaoService" ref="personRelationDaoService"/>
+   		<property name="personAddressDaoService"  ref="personAddressDaoService"/>
+   		<property name="exceptionFactory"		  ref="exceptionFactory"/>
+   		<property name="crypto"					  ref="crypto"/>
    	</bean>
    	
-   	<bean id="addressService" class="com.wytal.service.impl.address.AddressServiceImpl"  scope="singleton" init-method="init">
-   		<property name="addresDaoService" ref="addressDaoService"/>
+   	<bean id="personService" class="com.wytal.person.service.impl.PersonServiceImpl"  scope="singleton" init-method="init">
+   		<property name="personDaoService" ref="personDaoService"/>
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
    	</bean>
    	
    	
-    
-    
+   	<bean id="personContactDaoService" class="com.wytal.commons.service.contact.impl.ContactDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
+   		<property name="resourceName" value="jdbc-personContact.sql"/>
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
+   		<property name="seedDataService" ref="seedDataService"/>
+   	</bean>
+   	
+   	<bean id="personContactService" class="com.wytal.commons.service.contact.impl.ContactServiceImpl"  scope="singleton" init-method="init">
+   		<property name="contactDaoService" ref="personContactDaoService"/>
+   	</bean>
+   	
+   	
+   	<bean id="personRelationDaoService" class="com.wytal.person.service.impl.PersonRelationDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
+   		<property name="resourceName" value="jdbc-personRelation.sql"/>
+   		<property name="seedDataService" ref="seedDataService"/>
+   	</bean>
+   	
+   	<bean id="personRelationService" class="com.wytal.person.service.impl.PersonRelationServiceImpl"  scope="singleton" init-method="init">
+   		<property name="personRelationDaoService" ref="personRelationDaoService"/>
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
+   	</bean>
+   	
+   	<bean id="personAddressDaoService" class="com.wytal.person.service.impl.PersonAddressDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
+   		<property name="resourceName" value="jdbc-personAddress.sql"/>
+   		<property name="addressDaoService" ref="addressDaoService"/>
+   		<property name="seedDataService" ref="seedDataService"/>
+   	</bean>
+   	
+   	<bean id="personAddressService" class="com.wytal.person.service.impl.PersonAddressServiceImpl"  scope="singleton" init-method="init">
+   		<property name="personAddressDaoService" ref="personAddressDaoService"/>
+   		<property name="exceptionFactory" ref="exceptionFactory"/>
+   	</bean>
+   	
+   	
+  	<jaxrs:server address="/v1/person" id="personAdminService">
+		<jaxrs:serviceBeans>
+		<ref bean="personService"/>
+			</jaxrs:serviceBeans>
+			<jaxrs:extensionMappings>
+				<entry key="xml" value="application/xml"/>
+				<entry key="json" value="application/json" />
+			</jaxrs:extensionMappings>
+               <jaxrs:providers>
+				<ref bean="jsonProvider"/>
+                   <ref bean="exceptionMapper"/>
+                   <ref bean="cors-filter"/>
+			</jaxrs:providers>
+    </jaxrs:server>
+   	
+   	
 
 </beans>

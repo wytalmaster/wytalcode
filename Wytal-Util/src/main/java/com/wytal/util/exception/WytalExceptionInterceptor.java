@@ -18,8 +18,8 @@ import com.wytal.logging.factory.WytalLoggingFactory;
 
 public class WytalExceptionInterceptor  extends  JAXRSOutInterceptor  {
 	protected static final Logger logger = WytalLoggingFactory.getLogger(WytalLoggingFactory.UTIL_LOGGER);
-    protected WytalExceptonFactory factory;
-    public void setExceptionFactory(WytalExceptonFactory factory){
+    protected WytalExceptionFactory factory;
+    public void setExceptionFactory(WytalExceptionFactory factory){
             this.factory = factory;
     }
     private boolean handleMessageCalled;

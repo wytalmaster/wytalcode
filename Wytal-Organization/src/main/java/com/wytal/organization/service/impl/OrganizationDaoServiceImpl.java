@@ -12,14 +12,14 @@ import org.slf4j.Logger;
 import com.wytal.commons.address.service.AddressDaoService;
 import com.wytal.commons.org.OrganizationType;
 import com.wytal.commons.seed.service.SeedDataService;
+import com.wytal.commons.service.contact.ContactDaoService;
 import com.wytal.logging.factory.WytalLoggingFactory;
 import com.wytal.organization.Organization;
 import com.wytal.organization.OrganizationItem;
 import com.wytal.organization.OrganizationSearchRequest;
 import com.wytal.organization.OrganizationSearchResponse;
-import com.wytal.organization.service.OrganizationContactDaoService;
 import com.wytal.organization.service.OrganizationDaoService;
-import com.wytal.util.exception.WytalExceptonFactory;
+import com.wytal.util.exception.WytalExceptionFactory;
 import com.wytal.util.service.ServiceBase.ServiceResource;
 
 public class OrganizationDaoServiceImpl extends ServiceResource implements OrganizationDaoService {
@@ -28,19 +28,19 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 	
 	
 	private AddressDaoService addressDaoService;
-	private OrganizationContactDaoService orgContactService;
+	private ContactDaoService orgContactService;
 	
 	public void setAddressDaoService(AddressDaoService service){
 		this.addressDaoService = service;
 	}
 	
-	public void setOrganizationContactDaoService(OrganizationContactDaoService service){
+	public void setOrganizationContactDaoService(ContactDaoService service){
 		this.orgContactService = service;
 	}
 	
 	
-	private WytalExceptonFactory exceptionFactory;
-	public void setExceptionFactory(WytalExceptonFactory factory){
+	private WytalExceptionFactory exceptionFactory;
+	public void setExceptionFactory(WytalExceptionFactory factory){
 		this.exceptionFactory = factory;
 	}
 	
@@ -143,7 +143,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		org.setLastUpdated(rs.getTimestamp(8));
 		
 		org.setAddress( this.addressDaoService.getAddress(addressid, conn));
-		this.orgContactService.populateOrganizationContacts(org,conn);
+		org.setContacts(this.orgContactService.get(org.getId(),conn));
 		org.setChildren(this.getChildOrganizationID(org.getId(), conn));
 		return org;
 		
@@ -158,7 +158,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(this.prop.getProperty("101"));
+			ps = conn.prepareStatement(this.getProperty("101"));
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
 			if(rs.next()){
@@ -178,7 +178,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 	public boolean deleteOrganization(long id,Connection conn) throws Exception{
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(this.prop.getProperty("104"));
+			ps = conn.prepareStatement(this.getProperty("104"));
 			ps.setLong(1,id);
 			return (ps.executeUpdate()>0)?true:false;
 		}
@@ -196,7 +196,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		try {
 			this.addressDaoService.storeAddress(org.getAddress(),conn);
 			
-			ps = conn.prepareStatement(this.prop.getProperty("102"),Statement.RETURN_GENERATED_KEYS);
+			ps = conn.prepareStatement(this.getProperty("102"),Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, org.getType().getId());
 			ps.setString(2,  org.getName());
 			ps.setString(3, org.getDescription());
@@ -236,7 +236,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 				//Update. Get the ID from db
 				ps.close();
 				rs.close();
-				ps = conn.prepareStatement(this.prop.getProperty("105"));
+				ps = conn.prepareStatement(this.getProperty("105"));
 				ps.setString(1,org.getName());
 				rs = ps.executeQuery();
 				if(rs.next()){
@@ -244,7 +244,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 				}
 				
 			}
-			this.orgContactService.store(org,conn);
+			this.orgContactService.store(org.getId(),org.getContacts(),conn);
 			
 		}
 		catch(Exception ex){
@@ -262,7 +262,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(this.prop.getProperty("106"));
+			ps = conn.prepareStatement(this.getProperty("106"));
 			ps.setLong(1, organization);
 			rs = ps.executeQuery();
 			if(rs.next()){
@@ -284,7 +284,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		ResultSet rs = null;
 		try {
 			List<Organization> orgList = new ArrayList<>();
-			ps = conn.prepareStatement(this.prop.getProperty("107"));
+			ps = conn.prepareStatement(this.getProperty("107"));
 			ps.setLong(1, organization);
 			rs = ps.executeQuery();
 			while(rs.next()){
@@ -308,7 +308,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		ResultSet rs = null;
 		try {
 			List<Integer> childList = new ArrayList<>();
-			ps = conn.prepareStatement(this.prop.getProperty("107"));
+			ps = conn.prepareStatement(this.getProperty("107"));
 			ps.setLong(1, orgParentid);
 			rs = ps.executeQuery();
 			
@@ -333,7 +333,7 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 		ResultSet rs = null;
 		try {
 			conn = this.getConnection().getWytalDataSource();
-			ps = conn.prepareStatement(this.prop.getProperty("108"));
+			ps = conn.prepareStatement(this.getProperty("108"));
 			ps.setLong(1, orgId);
 			rs = ps.executeQuery();
 			
@@ -368,24 +368,24 @@ public class OrganizationDaoServiceImpl extends ServiceResource implements Organ
 			
 			if(typeid>0 && name ==null){
 				//110
-				sql = this.prop.getProperty("110");
+				sql = this.getProperty("110");
 				ps = conn.prepareStatement(sql);
 				ps.setInt(n++,typeid);
 			}
 
 			else if(typeid==0 && name != null){				
-				sql = this.prop.getProperty("111");
+				sql = this.getProperty("111");
 				ps = conn.prepareStatement(sql);
 				ps.setString(n++,(name+"%"));
 			}
 			else if(typeid>0 && name != null){
-				sql = this.prop.getProperty("112");
+				sql = this.getProperty("112");
 				ps = conn.prepareStatement(sql);
 				ps.setInt(n++,typeid);
 				ps.setString(n++,name+"%");
 			}
 			else {
-				sql = String.format(this.prop.getProperty("109"), " ");
+				sql = String.format(this.getProperty("109"), " ");
 			}
 		
 
