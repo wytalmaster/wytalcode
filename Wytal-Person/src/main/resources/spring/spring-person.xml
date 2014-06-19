@@ -46,7 +46,7 @@
    	</bean>
    	
    	<bean id="personAddressDaoService" class="com.wytal.person.service.impl.PersonAddressDaoServiceImpl" scope="singleton" init-method="init" parent="serviceResource">
-   		<property name="resourceName" value="jdbc-personAddress.sql"/>
+   		<property name="resourceName" value="jdbc-personaddress.sql"/>
    		<property name="addressDaoService" ref="addressDaoService"/>
    		<property name="seedDataService" ref="seedDataService"/>
    	</bean>
